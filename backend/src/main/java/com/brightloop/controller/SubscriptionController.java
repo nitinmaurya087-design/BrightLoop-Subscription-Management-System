@@ -64,4 +64,66 @@ public class SubscriptionController {
         SubscriptionDto subscription = subscriptionService.handleAction(id, request);
         return ResponseEntity.ok(ApiResponse.success("Subscription action executed successfully", subscription));
     }
+
+    @PostMapping("/{id}/activate")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<SubscriptionDto>> activateSubscription(@PathVariable Long id) {
+        SubscriptionActionRequest req = new SubscriptionActionRequest();
+        req.setAction("ACTIVATE");
+        SubscriptionDto subscription = subscriptionService.handleAction(id, req);
+        return ResponseEntity.ok(ApiResponse.success("Subscription activated successfully", subscription));
+    }
+
+    @PostMapping("/{id}/pause")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<SubscriptionDto>> pauseSubscription(@PathVariable Long id) {
+        SubscriptionActionRequest req = new SubscriptionActionRequest();
+        req.setAction("PAUSE");
+        SubscriptionDto subscription = subscriptionService.handleAction(id, req);
+        return ResponseEntity.ok(ApiResponse.success("Subscription paused successfully", subscription));
+    }
+
+    @PostMapping("/{id}/resume")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<SubscriptionDto>> resumeSubscription(@PathVariable Long id) {
+        SubscriptionActionRequest req = new SubscriptionActionRequest();
+        req.setAction("RESUME");
+        SubscriptionDto subscription = subscriptionService.handleAction(id, req);
+        return ResponseEntity.ok(ApiResponse.success("Subscription resumed successfully", subscription));
+    }
+
+    @PostMapping("/{id}/close")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<SubscriptionDto>> closeSubscription(
+            @PathVariable Long id,
+            @RequestBody(required = false) SubscriptionActionRequest body
+    ) {
+        SubscriptionActionRequest req = new SubscriptionActionRequest();
+        req.setAction("CLOSE");
+        if (body != null) req.setReason(body.getReason());
+        SubscriptionDto subscription = subscriptionService.handleAction(id, req);
+        return ResponseEntity.ok(ApiResponse.success("Subscription closed successfully", subscription));
+    }
+
+    @PostMapping("/{id}/early-terminate")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<SubscriptionDto>> earlyTerminateSubscription(
+            @PathVariable Long id,
+            @RequestBody(required = false) SubscriptionActionRequest body
+    ) {
+        SubscriptionActionRequest req = new SubscriptionActionRequest();
+        req.setAction("EARLY_TERMINATE");
+        if (body != null) req.setReason(body.getReason());
+        SubscriptionDto subscription = subscriptionService.handleAction(id, req);
+        return ResponseEntity.ok(ApiResponse.success("Subscription terminated early", subscription));
+    }
+
+    @PostMapping("/{id}/renew")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<SubscriptionDto>> renewSubscription(@PathVariable Long id) {
+        SubscriptionActionRequest req = new SubscriptionActionRequest();
+        req.setAction("RENEW");
+        SubscriptionDto subscription = subscriptionService.handleAction(id, req);
+        return ResponseEntity.ok(ApiResponse.success("Subscription renewed successfully", subscription));
+    }
 }

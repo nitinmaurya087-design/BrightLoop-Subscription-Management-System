@@ -55,7 +55,7 @@ public class QuotationController {
         return ResponseEntity.ok(ApiResponse.success("Quotation confirmed successfully and email sent", quotation));
     }
 
-    @PostMapping("/{id}/convert")
+    @PostMapping({"/{id}/convert", "/{id}/convert-to-subscription"})
     @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<ApiResponse<SubscriptionDto>> convertToSubscription(@PathVariable Long id) {
         SubscriptionDto subscription = quotationService.convertToSubscription(id);

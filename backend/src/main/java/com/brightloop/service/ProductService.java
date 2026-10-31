@@ -137,6 +137,21 @@ public class ProductService {
     }
 
     @Transactional
+    public ProductVariantDto updateVariant(Long variantId, ProductVariantRequest request) {
+        ProductVariant variant = productVariantRepository.findById(variantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product variant not found with id: " + variantId));
+
+        if (request.getVariantName() != null) variant.setVariantName(request.getVariantName().trim());
+        if (request.getAttributeValue() != null) variant.setAttributeValue(request.getAttributeValue().trim());
+        if (request.getAdditionalPrice() != null) variant.setAdditionalPrice(request.getAdditionalPrice());
+        if (request.getStatus() != null) variant.setStatus(request.getStatus());
+
+        variant = productVariantRepository.save(variant);
+        auditService.log("PRODUCT_VARIANT_UPDATE", "ProductVariant", variantId.toString(), "Updated variant ID: " + variantId);
+        return mapVariantToDto(variant);
+    }
+
+    @Transactional
     public void deleteVariant(Long variantId) {
         ProductVariant variant = productVariantRepository.findById(variantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product variant not found with id: " + variantId));

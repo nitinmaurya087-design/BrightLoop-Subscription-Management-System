@@ -43,7 +43,7 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.success("Password has been reset successfully. You can now login.", null));
     }
 
-    @GetMapping("/me")
+    @GetMapping({"/me", "/profile"})
     public ResponseEntity<ApiResponse<UserProfileDto>> getCurrentUser(@AuthenticationPrincipal User user) {
         UserProfileDto profile = authService.getCurrentUserProfile(user);
         return ResponseEntity.ok(ApiResponse.success("Current user retrieved", profile));

@@ -78,9 +78,23 @@ public class ProductController {
         return ResponseEntity.ok(ApiResponse.success("Variant added successfully", variant));
     }
 
-    @DeleteMapping("/variants/{variantId}")
+    @PutMapping({"/{productId}/variants/{variantId}", "/variants/{variantId}"})
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<ProductVariantDto>> updateVariant(
+            @PathVariable(required = false) Long productId,
+            @PathVariable Long variantId,
+            @Valid @RequestBody ProductVariantRequest request
+    ) {
+        ProductVariantDto variant = productService.updateVariant(variantId, request);
+        return ResponseEntity.ok(ApiResponse.success("Variant updated successfully", variant));
+    }
+
+    @DeleteMapping({"/{productId}/variants/{variantId}", "/variants/{variantId}"})
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Void>> deleteVariant(@PathVariable Long variantId) {
+    public ResponseEntity<ApiResponse<Void>> deleteVariant(
+            @PathVariable(required = false) Long productId,
+            @PathVariable Long variantId
+    ) {
         productService.deleteVariant(variantId);
         return ResponseEntity.ok(ApiResponse.success("Variant deleted successfully", null));
     }
