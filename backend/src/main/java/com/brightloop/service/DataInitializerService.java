@@ -45,6 +45,7 @@ public class DataInitializerService implements ApplicationRunner {
         log.info("Ensuring demo users and BCrypt credentials are valid...");
 
         initDemoUser("admin@brightloop.com", "Admin@12345", Role.ADMIN, "System Administrator", "Executive", "Super Admin", "+91 90000 00001");
+        initDemoUser("nitinmaurya087@gmail.com", "Admin@12345", Role.ADMIN, "Nitin Maurya", "Executive", "Super Administrator", "+91 98765 43210");
         initDemoUser("staff@brightloop.com", "Staff@12345", Role.STAFF, "Rohan Verma", "Billing & Sales", "Senior Billing Specialist", "+91 98765 43210");
         initDemoUser("customer@brightloop.com", "Customer@12345", Role.CUSTOMER, "Aditi Rao", null, null, "+91 91234 56780");
 

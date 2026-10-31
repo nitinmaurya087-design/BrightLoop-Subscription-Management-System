@@ -38,17 +38,24 @@ export const Login: React.FC = () => {
   };
 
   const handleDemoLogin = async (role: UserRole) => {
+    const creds = {
+      ADMIN: { email: 'admin@brightloop.com', password: 'Admin@12345' },
+      STAFF: { email: 'staff@brightloop.com', password: 'Staff@12345' },
+      CUSTOMER: { email: 'customer@brightloop.com', password: 'Customer@12345' },
+    }[role];
+    setEmail(creds.email);
+    setPassword(creds.password);
     setIsLoading(true);
     try {
-      const loggedUser = await loginAsDemo(role);
-      success('Demo Session Active', `Signed in as ${loggedUser.fullName} (${role})`);
+      const loggedUser = await login(creds);
+      success('Authentication Successful', `Signed in as ${loggedUser.fullName || 'Administrator'}`);
       if (role === 'CUSTOMER') {
         navigate('/portal');
       } else {
         navigate('/dashboard');
       }
     } catch (err: any) {
-      error('Demo Login Error', err.response?.data?.message || 'Failed to authenticate demo user.');
+      error('Sign in failed', err.response?.data?.message || 'Failed to authenticate.');
     } finally {
       setIsLoading(false);
     }
