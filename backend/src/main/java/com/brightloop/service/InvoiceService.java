@@ -19,7 +19,10 @@ import java.time.Year;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
+@Transactional(readOnly = true)
 public class InvoiceService {
 
     private final InvoiceRepository invoiceRepository;

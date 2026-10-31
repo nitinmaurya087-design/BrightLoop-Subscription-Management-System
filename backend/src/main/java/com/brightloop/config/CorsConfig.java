@@ -14,7 +14,7 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    @Value("${brightloop.cors.allowed-origins:http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,https://*.vercel.app,https://*.onrender.com,https://*.railway.app}")
+    @Value("${brightloop.cors.allowed-origins:http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,https://*.vercel.app,https://*.onrender.com,https://*.railway.app,https://*.trycloudflare.com}")
     private String allowedOrigins;
 
     @Bean
