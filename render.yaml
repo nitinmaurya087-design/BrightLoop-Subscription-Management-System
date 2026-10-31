@@ -1,0 +1,39 @@
+services:
+  # Spring Boot Backend
+  - type: web
+    name: brightloop-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    region: oregon
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: PORT
+        value: 8080
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_URL
+        sync: false # Set to your MySQL JDBC URL
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+    healthCheckPath: /api/health
+
+  # React Static Frontend
+  - type: web
+    name: brightloop-frontend
+    runtime: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    plan: free
+    region: oregon
+    envVars:
+      - key: VITE_API_URL
+        sync: false # Set to your deployed backend URL (e.g. https://brightloop-backend.onrender.com/api)
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

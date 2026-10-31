@@ -1,0 +1,36 @@
+# Git ignore for BrightLoop Subscription Management System
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backend / Maven
+backend/target/
+backend/*.log
+backend/.mvn/timing.properties
+backend/.flattened-pom.xml
+
+# Frontend / Node
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Database local storage
+data/
+h2-data/
+mysql-data/

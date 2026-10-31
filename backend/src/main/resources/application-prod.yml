@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: ${DB_URL:${SPRING_DATASOURCE_URL:${DATABASE_URL:${MYSQL_URL:jdbc:mysql://localhost:3306/brightloop?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}}}}
+    username: ${DB_USERNAME:${SPRING_DATASOURCE_USERNAME:${MYSQLUSER:brightloop}}}
+    password: ${DB_PASSWORD:${SPRING_DATASOURCE_PASSWORD:${MYSQLPASSWORD:brightloop_pass}}}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: validate

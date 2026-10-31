@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -e
+
+export JAVA_HOME="/Applications/IntelliJ IDEA.app/Contents/jbr/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+MVN_BIN="/Applications/IntelliJ IDEA.app/Contents/plugins/maven-plugin/lib/maven3/bin/mvn"
+
+if [ ! -x "$MVN_BIN" ]; then
+    echo "ERROR: Maven not found at $MVN_BIN" >&2
+    exit 1
+fi
+
+exec "$MVN_BIN" "$@"
