@@ -34,3 +34,10 @@ frontend/*.local
 data/
 h2-data/
 mysql-data/
+
+# Archives and build artifacts
+*.zip
+*.tar.gz
+*.rar
+scratch/
+
